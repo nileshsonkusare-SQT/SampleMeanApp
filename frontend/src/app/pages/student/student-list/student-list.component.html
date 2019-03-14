@@ -1,0 +1,56 @@
+<!-- Content Header -->
+<section class="content-header">
+    <h1>
+        Student
+        <small>List</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a [routerLink]="['/dashboard']"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li>Student</li>
+        <li class="active">List</li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Students</h3>
+                    <button type="button" class="pull-right btn btn-sm btn-info" (click)="addStudent()"><i class="fa fa-plus m-r-xs"></i> Add Student</button>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Address</th>
+                                <th>Mobile No</th>
+                                <th>Birthdate</th>
+                                <th>Actions</th>
+                            </tr>
+                            <tr *ngFor="let student of students">
+                                <td>{{ student.firstname }}</td>
+                                <td>{{ student.lastname }}</td>
+                                <td>{{ student.address }}</td>
+                                <td>{{ student.mobileno }}</td>
+                                <td>{{ parseDate(student.birthdate) }}</td>
+                                <td>
+                                    <button type="button" class="btn btn-success btn-xs m-r-sm" (click) = "editStudent(student);">Edit</button>
+                                    <button type="button" class="btn btn-danger btn-xs" (click) = "deleteStudent(student);">Delete</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer clearfix">
+                </div>
+            </div>
+            <!-- /.box -->
+        </div>
+    </div>
+</section>

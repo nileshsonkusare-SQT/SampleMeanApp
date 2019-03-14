@@ -1,0 +1,103 @@
+<!-- Content Header -->
+<section class="content-header">
+    <h1>
+        Student
+        <small>Create</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a [routerLink]="['/dashboard']"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li>Student</li>
+        <li class="active">Create</li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Student</h3>
+                </div>
+                <!-- /.box-header -->
+                <!-- form start -->
+                <form role="form" method="post" [formGroup]="studentForm" (ngSubmit)="save()">
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group" [ngClass]="{ 'has-error': submitted && f.firstname.errors }">
+                                    <label for="firstname">First Name</label>
+                                    <input type="text" formControlName="firstname" class="form-control" 
+                                        placeholder="First Name" id="firstname" name="firstname" required>
+                                    <div *ngIf="submitted && f.firstname.errors" class="invalid-feedback">
+                                        <span *ngIf="f.firstname.errors.required" class="help-block">Please enter first name.</span>
+                                    </div>
+                                </div>                                
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group" [ngClass]="{ 'has-error': submitted && f.lastname.errors }">
+                                    <label for="lastname">Last Name</label>
+                                    <input type="text" formControlName="lastname" class="form-control" 
+                                        placeholder="Last Name" id="lastname" name="lastname" required>
+                                    <div *ngIf="submitted && f.lastname.errors" class="invalid-feedback">
+                                        <span *ngIf="f.lastname.errors.required" class="help-block">Please enter last name.</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row m-t-sm">
+                            <div class="col-md-6">
+                                <div class="form-group" [ngClass]="{ 'has-error': submitted && f.mobileno.errors }">
+                                    <label for="mobileno">Mobile No</label>
+                                    <input type="text" formControlName="mobileno" class="form-control" 
+                                        placeholder="Mobile No" id="mobileno" name="mobileno" required> 
+                                    <div *ngIf="submitted && f.mobileno.errors" class="invalid-feedback">
+                                        <span *ngIf="f.mobileno.errors.required" class="help-block">Please enter mobile no.</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group" [ngClass]="{ 'has-error': submitted && f.birthdate.errors }">
+                                    <label for="birthdate">Birth Date</label>
+                                    <div class="input-group date">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <input type="text" id="birthdate" name="birthdate" autocomplete="off" 
+                                            class="form-control"
+                                            placeholder="MM/DD/YYYY"
+                                            formControlName="birthdate" 
+                                            #dp="bsDatepicker" bsDatepicker 
+                                            [maxDate]="maxDate" 
+                                            (bsValueChange)="onDateValueChange($event)"                                            
+                                            [bsConfig]="{ dateInputFormat: 'MM/DD/YYYY', containerClass: 'theme-dark-blue' }" required>
+                                    </div>
+                                    
+                                    <div *ngIf="submitted && f.birthdate.errors" class="invalid-feedback">
+                                        <span *ngIf="f.birthdate.errors.required" class="help-block">Please select birthdate.</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row m-t-sm">
+                            <div class="col-md-12">
+                                <label for="address">Address</label>
+                                <textarea formControlName="address" class="form-control" rows="3" 
+                                    placeholder="Address" id="address" name="address"></textarea>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- /.box-body -->
+
+                    <div class="box-footer">
+                        <div class="row col-md-12">
+                            <button type="submit" class="btn btn-primary m-r-sm">Save</button>
+                            <button type="button" class="btn btn-default m-r-sm" (click)="goToStudentList();">Cancel</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

@@ -23,9 +23,23 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/ngx-toastr/toastr.css",  
+              "node_modules/font-awesome/css/font-awesome.css",
+              "node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
+              "src/assets/css/bootstrap/bootstrap.min.css",
+              "src/assets/css/Ionicons/ionicons.min.css",
+              "src/assets/css/AdminLTE.min.css",
+              "src/assets/css/skins/_all-skins.min.css",
               "src/styles.css"
             ],
-            "scripts": [],
+            "scripts": [
+              "src/assets/js/jquery/jquery.min.js", 
+              "src/assets/js/jquery-ui/jquery-ui.min.js", 
+              "src/assets/js/bootstrap/bootstrap.min.js", 
+              "src/assets/js/moment/moment.min.js",
+              "src/assets/js/jquery-slimscroll/jquery.slimscroll.min.js", 
+              "src/assets/js/adminlte.min.js"
+            ],
             "es5BrowserSupport": true
           },
           "configurations": {
