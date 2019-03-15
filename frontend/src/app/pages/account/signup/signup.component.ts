@@ -4,12 +4,16 @@ import { Router } from "@angular/router";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 //@Services
-import { AuthService } from '../../../services/auth/auth.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { CommonService } from 'src/app/services/common.service';
 import { AccountService } from 'src/app/services/account.service';
 
+// import custom validator to validate that password and retype password fields match
+import { MustMatch } from 'src/app/shared/_helpers/must-match.validator';
+
 //@Models
 import { UserVM } from '../../../models/UserVM';
+
 
 @Component({
   selector: 'app-signup',
@@ -48,6 +52,9 @@ export class SignupComponent implements OnInit, OnDestroy {
       email: [this.userModal.email, [Validators.required, Validators.email]],
       password: [this.userModal.password, Validators.required],
       retypepassword: [this.retypePassword, Validators.required]
+    },
+    {
+      validator: MustMatch('password', 'retypepassword')
     });
   }
 
