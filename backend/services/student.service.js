@@ -1,4 +1,3 @@
-// Require Student model in student controller
 let Student = require('../models/student');
 
 let StudentService = {

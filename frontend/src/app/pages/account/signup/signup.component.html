@@ -1,0 +1,60 @@
+<div class="register-box">
+    <div class="register-logo">
+        <a href="javascript;"><b>MEAN</b> Stack</a>
+    </div>
+    <!-- /.register-logo -->
+    <div class="register-box-body">
+        <p class="login-box-msg">Sign Up</p>
+
+        <form method="post" [formGroup]="signupForm" (ngSubmit)="signup()">
+            <div class="form-group has-feedback" [ngClass]="{ 'has-error': submitted && f.name.errors }">
+                <input type="text" formControlName="name" class="form-control" placeholder="Full Name" id="name"
+                    name="name" required>
+                <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                    <span *ngIf="f.name.errors.required" class="help-block">Please enter name.</span>
+                </div>
+            </div>
+
+            <div class="form-group has-feedback" [ngClass]="{ 'has-error': submitted && f.email.errors }">
+                <input type="email" formControlName="email" class="form-control" placeholder="Email" id="email"
+                    name="email" required>
+                <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                    <span *ngIf="f.email.errors.required" class="help-block">Please enter email.</span>
+                    <span *ngIf="f.email.errors.email" class="help-block">Please enter valid email.</span>
+                </div>
+            </div>
+
+            <div class="form-group has-feedback" [ngClass]="{ 'has-error': submitted && f.password.errors }">
+                <input type="password" formControlName="password" class="form-control" placeholder="Password"
+                    id="password" name="password" required>
+                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                    <span *ngIf="f.password.errors.required" class="help-block">Please enter password.</span>
+                </div>
+            </div>
+
+            <div class="form-group has-feedback" [ngClass]="{ 'has-error': submitted && f.retypepassword.errors }">
+                <input type="password" formControlName="retypepassword" class="form-control"
+                    placeholder="Retype Password" id="retypepassword" name="retypepassword" required>
+                <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
+                <div *ngIf="submitted && f.retypepassword.errors" class="invalid-feedback">
+                    <span *ngIf="f.retypepassword.errors.required" class="help-block">Please retype password.</span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12 pull-right">
+                    <button type="submit" class="btn btn-primary btn-block btn-flat">Sign Up</button>
+                </div>
+                <!-- /.col -->
+            </div>
+        </form>
+
+        <div class="social-auth-links text-center">
+            <a [routerLink]="['/login']" class="text-center">I alreay have an account!</a>
+        </div>
+    </div>
+    <!-- /.register-box-body -->
+</div>

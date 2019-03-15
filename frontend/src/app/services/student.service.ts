@@ -4,7 +4,7 @@ import { HttpHeaders } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 
 //@Constant
-import { CONFIG } from '../shared/CONFIG';
+import { AppConfig } from '../shared/app-config';
 
 //@Services
 import { HttpService } from './http.service';
@@ -15,17 +15,13 @@ import { HttpService } from './http.service';
 export class StudentService {
   private apiUrl: string;
 
-  constructor(private _api: CONFIG,
+  constructor(private _api: AppConfig,
     private _httpService: HttpService) {
     this.apiUrl = this._api.ServerWithApiUrl;
   }
 
   getStudents() {
-    let headers = new HttpHeaders();
-    headers.append('Content-Type', 'application/json');
-    this._api.setAuthHeader(headers);
-
-    return this._httpService.get(`${this.apiUrl}student/GetAll`, { headers: headers })
+    return this._httpService.get(`${this.apiUrl}student/GetAll`, { headers: this._api.getHeaders() })
       .pipe(
         map((response: Response) => {          
           return this._httpService.extractData(response);
@@ -36,11 +32,7 @@ export class StudentService {
   }
 
   getStudentById(id) {
-    let headers = new HttpHeaders();
-    headers.append('Content-Type', 'application/json');
-    this._api.setAuthHeader(headers);
-
-    return this._httpService.get(`${this.apiUrl}student/${id}`, { headers: headers })
+    return this._httpService.get(`${this.apiUrl}student/${id}`, { headers: this._api.getHeaders() })
       .pipe(
         map((response: Response) => {
           return this._httpService.extractData(response);
@@ -51,11 +43,7 @@ export class StudentService {
   }
 
   createStudent(student) {
-    let headers = new HttpHeaders();
-    headers.append('Content-Type', 'application/json');
-    this._api.setAuthHeader(headers);   
-
-    return this._httpService.post(`${this.apiUrl}student`, student, { headers: headers })
+    return this._httpService.post(`${this.apiUrl}student`, student, { headers: this._api.getHeaders() })
       .pipe(
         map((response: any) => {
           return this._httpService.extractData(response);
@@ -66,11 +54,7 @@ export class StudentService {
   }
 
   updateStudent(student) {
-    let headers = new HttpHeaders();
-    headers.append('Content-Type', 'application/json');
-    this._api.setAuthHeader(headers);
-
-    return this._httpService.put(`${this.apiUrl}student`, student, { headers: headers })
+    return this._httpService.put(`${this.apiUrl}student`, student, { headers: this._api.getHeaders() })
       .pipe(
         map((response: any) => {
           return this._httpService.extractData(response);
@@ -81,11 +65,7 @@ export class StudentService {
   }
 
   deleteStudent(id) {
-    let headers = new HttpHeaders();
-    headers.append('Content-Type', 'application/json');
-    this._api.setAuthHeader(headers);
-
-    return this._httpService.delete(`${this.apiUrl}student/${id}`, { headers: headers })
+    return this._httpService.delete(`${this.apiUrl}student/${id}`, { headers: this._api.getHeaders() })
       .pipe(
         map((response: any) => {
           return this._httpService.extractData(response);

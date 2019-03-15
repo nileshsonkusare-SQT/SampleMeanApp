@@ -4,7 +4,6 @@ let StudentController = {
     getAllStudents: async function (req, res, next) {
         try {
             let students = await StudentService.getAllStudents();
-
             return res.status(200).json({ status: 200, data: students, success: true });
         }
         catch (e) {

@@ -1,9 +1,13 @@
 const express = require("express");
 const router = express.Router();
 
-var StudentsRoutes = require("./api/student.route");
+const verifytoken = require('../auth/verifytoken');
+const StudentsRoute = require("./api/student.route");
+const UsersRoute = require("./api/user.route");
+const AccountRoute = require("./api/account.route");
 
-
-router.use('/student', StudentsRoutes);
+router.use('/student', StudentsRoute);
+router.use('/user',  UsersRoute);
+router.use('/account', AccountRoute); // This api can access without token.
 
 module.exports = router;

@@ -8,10 +8,12 @@ const bodyParser = require('body-parser');
 const logger = require('morgan');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const expressJwt = require('express-jwt');
 
 const config = require('./config/DB');
+const authController = require('./auth/authController');
+//const verifytoken = require('./auth/verifytoken');
 const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
 
 //Api Route
 const apiRouter = require('./routes/api.route');
@@ -46,8 +48,11 @@ app.use(function(req, res, next) {
   next();
 });
 
+//Use JWT Token in each api request except specified in unless block.
+app.use(expressJwt({secret: process.env.SECRET_KEY}).unless({path: ['/api/authenticate','/api/account/Signup']}));
+
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.post('/api/authenticate', authController); //Used for login and get api access token.
 
 //Use the API routes for all routes matching /api
 app.use('/api', apiRouter);
