@@ -4,23 +4,4 @@
 </div>
 <!--LOADER END-->
 
-<div class="wrapper" *ngIf="isLoggedIn">
-  <!-- Header -->
-  <app-header></app-header>
-
-  <!-- Sidebar -->
-  <app-sidebar></app-sidebar>
-
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <router-outlet></router-outlet>
-  </div>
-
-  <!-- Footer -->
-  <app-footer></app-footer>
-</div>
-
-<div *ngIf="!isLoggedIn">
-  <!-- Login & Register Page will render here-->
-  <router-outlet></router-outlet>
-</div>
+<router-outlet></router-outlet>

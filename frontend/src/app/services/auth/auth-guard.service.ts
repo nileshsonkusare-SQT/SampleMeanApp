@@ -14,9 +14,9 @@ export class AuthGuard {
     public router: Router) { }
 
     canActivate(route: ActivatedRouteSnapshot): boolean {
-      //const url = route.routeConfig.path;
+      const url = route.routeConfig.path;
       if (!this._auth.isAuthenticated()) {
-        this.router.navigate(['']);
+        this.router.navigate(['/login']);
         return false;
       }
       return true;

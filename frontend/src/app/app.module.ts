@@ -19,6 +19,8 @@ import { FooterComponent } from './pages/common/footer/footer.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { LoginComponent } from './pages/account/login/login.component';
 import { SignupComponent } from './pages/account/signup/signup.component';
+import { LoginLayoutComponent } from './pages/common/layouts/login-layout/login-layout.component';
+import { AppLayoutComponent } from './pages/common/layouts/app-layout/app-layout.component';
 
 //@Services
 import { AppRoutingModule } from './app-routing.module';
@@ -30,6 +32,7 @@ import { AuthService } from './services/auth/auth.service';
 import { StorageService } from './services/storage.service';
 import { AuthGuard } from './services/auth/auth-guard.service';
 import { AccountService } from './services/account.service';
+
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -46,7 +49,9 @@ export function tokenGetter() {
     FooterComponent,
     DashboardComponent,
     LoginComponent,
-    SignupComponent
+    SignupComponent,
+    LoginLayoutComponent,
+    AppLayoutComponent
   ],
   imports: [
     BrowserModule,
