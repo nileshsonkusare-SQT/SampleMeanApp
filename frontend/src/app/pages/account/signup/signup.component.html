@@ -22,7 +22,7 @@
                 <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                 <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
                     <span *ngIf="f.email.errors.required" class="help-block">Please enter email.</span>
-                    <span *ngIf="f.email.errors.email" class="help-block">Please enter valid email.</span>
+                    <span *ngIf="f.email.errors.pattern" class="help-block">Please enter valid email.</span>
                 </div>
             </div>
 
@@ -35,11 +35,11 @@
                 </div>
             </div>
 
-            <div class="form-group has-feedback" [ngClass]="{ 'has-error': submitted && (f.retypepassword.errors || f.retypepassword.errors.mustMatch)}">
+            <div class="form-group has-feedback" [ngClass]="{ 'has-error': submitted && f.retypepassword.errors}">
                 <input type="password" formControlName="retypepassword" class="form-control"
                     placeholder="Retype Password" id="retypepassword" name="retypepassword" required>
                 <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
-                <div *ngIf="submitted && (f.retypepassword.errors || f.retypepassword.errors.mustMatch)" class="invalid-feedback">
+                <div *ngIf="submitted && f.retypepassword.errors" class="invalid-feedback">
                     <span *ngIf="f.retypepassword.errors.required" class="help-block">Please retype password.</span>
                     <span *ngIf="f.retypepassword.errors.mustMatch" class="help-block">Passwords must match</span>
                 </div>

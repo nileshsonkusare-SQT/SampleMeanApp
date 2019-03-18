@@ -1,7 +1,7 @@
 //@Packages
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 
 @Injectable()
 export class HttpService {
@@ -30,25 +30,25 @@ export class HttpService {
 
   handleError(error: HttpErrorResponse | any) {
     let errorMessage: any;
-    if (error instanceof HttpErrorResponse) {
+    if (error instanceof HttpErrorResponse) {      
       if (error.status !== 0) {
         try {
           const response = error.error || '';
-          if (response.error.length > 0) {
-            errorMessage = response.Errors.map(function (obj) { return { field: obj.FieldName, message: obj.Message }; });
+          if (typeof response == 'object') {
+            errorMessage = { field: 'custom', message: response.message };
           } else {
-            errorMessage = [{ field: 'custom', message: response.Message }];
+            errorMessage = { field: 'custom', message: 'Oops! Something went wrong, please try again!' };
           }
         } catch (exception) {
-          errorMessage = [{ field: 'custom', message: 'Oops! Something went wrong, please try again!' }];
+          errorMessage = { field: 'custom', message: 'Oops! Something went wrong, please try again!' };
         }
       } else {
-        errorMessage = [{ field: 'custom', message: 'Oops! Something went wrong, please try again!' }];
+        errorMessage = { field: 'custom', message: 'Oops! Something went wrong, please try again!' };
       }
     } else {
-      errorMessage = [{ field: 'custom', message: 'Oops! Something went wrong, please try again!' }];
+      errorMessage = { field: 'custom', message: 'Oops! Something went wrong, please try again!' };
     }
-    return Observable.throw(errorMessage);
+    return throwError(errorMessage);
   }
 
    extractData(res: Response) {

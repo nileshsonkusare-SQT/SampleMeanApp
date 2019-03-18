@@ -1,18 +1,26 @@
 let UserService = require('../services/user.service');
 
-
-let AccountController = {    
+let AccountController = {
     registerUser: async function (req, res, next) {
         try {
-            let userModal = {
-                name: req.body.name,
-                email: req.body.email,
-                password: req.body.password
-            };
 
-            let createdUser = await UserService.createUser(userModal);
+            //Check email address exist.
+            let userEmailExist = await UserService.getUserByEmail(req.body.email);
 
-            return res.status(201).json({ status: 201, data: createdUser, success: true });
+            if (!Boolean(userEmailExist)) {
+
+                let userModal = {
+                    name: req.body.name,
+                    email: req.body.email,
+                    password: req.body.password
+                };
+
+                let createdUser = await UserService.createUser(userModal);
+
+                return res.status(201).json({ status: 201, data: createdUser, success: true });
+            } else {
+                return res.status(400).json({ status: 400, message: "Email already in use.", success: false });
+            }
         }
         catch (e) {
             return res.status(400).json({ status: 400, message: e.message, success: false });

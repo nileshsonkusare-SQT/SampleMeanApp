@@ -30,6 +30,14 @@ let UserService = {
             throw Error('Error while get user by id');
         }
     },
+    getUserByEmail: async function (email) {
+        try {
+            let user = await User.findOne({ email: email});
+            return user;
+        } catch (e) {
+            throw Error('Error while get user by email');
+        }
+    },
     createUser: async function (userModal) {
         try {
             let user = new User(userModal);

@@ -7,12 +7,14 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { CommonService } from 'src/app/services/common.service';
 import { AccountService } from 'src/app/services/account.service';
+import { REGEXP } from 'src/app/shared/regexp';
 
 // import custom validator to validate that password and retype password fields match
 import { MustMatch } from 'src/app/shared/_helpers/must-match.validator';
 
 //@Models
 import { UserVM } from '../../../models/UserVM';
+
 
 
 @Component({
@@ -32,6 +34,7 @@ export class SignupComponent implements OnInit, OnDestroy {
     private _renderer: Renderer2,
     private _formBuilder: FormBuilder,
     private _auth: AuthService,
+    public regexp: REGEXP,
     private _commonService: CommonService,
     private _accountService: AccountService
   ) {
@@ -49,7 +52,7 @@ export class SignupComponent implements OnInit, OnDestroy {
   buildForm() {
     this.signupForm = this._formBuilder.group({
       name: [this.userModal.name, Validators.required],
-      email: [this.userModal.email, [Validators.required, Validators.email]],
+      email: [this.userModal.email, [Validators.required, Validators.pattern(this.regexp.EMAIL_REGEXP)]],
       password: [this.userModal.password, Validators.required],
       retypepassword: [this.retypePassword, Validators.required]
     },

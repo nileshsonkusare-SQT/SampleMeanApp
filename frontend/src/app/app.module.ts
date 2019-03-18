@@ -25,6 +25,7 @@ import { AppLayoutComponent } from './pages/common/layouts/app-layout/app-layout
 //@Services
 import { AppRoutingModule } from './app-routing.module';
 import { AppConfig } from './shared/app-config';
+import { REGEXP } from './shared/regexp';
 import { CommonService } from './services/common.service';
 import { StudentService } from './services/student.service';
 import { HttpService } from './services/http.service';
@@ -79,6 +80,7 @@ export function tokenGetter() {
   ],
   providers: [
     AppConfig,
+    REGEXP,
     CommonService,
     AuthService,
     AuthGuard,
