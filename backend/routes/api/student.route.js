@@ -8,6 +8,8 @@ router.get("/GetAll", StudentController.getAllStudents);
 
 router.get("/:id?", StudentController.getStudentById);
 
+router.post("/DummyStudents", StudentController.dummyStudents);
+
 router.post("/", StudentController.createStudent);
 
 router.put("/", StudentController.updateStudent);

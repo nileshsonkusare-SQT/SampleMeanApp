@@ -1,0 +1,43 @@
+ul.pagination li a {
+    cursor: pointer;
+}
+
+ul.pagination li.disabled a {
+    cursor: not-allowed !important;
+}
+
+div.paginate_info{
+    padding-top: 8px;
+    white-space: nowrap;
+}
+
+div.paginate{
+    margin: 0;
+    white-space: nowrap;
+    text-align: right;
+}
+
+div.paginate ul.pagination {
+    margin: 2px 0;
+    white-space: nowrap;
+}
+
+div.paginate_length{
+    text-align: left;
+}
+div.paginate_length label{
+    font-weight: normal;
+    text-align: left;
+    white-space: nowrap;
+}
+div.paginate_length select {
+    width: 75px;
+    display: inline-block;
+}
+
+
+@media screen and (max-width: 992px){
+    div.paginate, div.paginate_length, div.paginate_info  {
+        text-align: center;
+    }
+}

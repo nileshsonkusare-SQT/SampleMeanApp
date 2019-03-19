@@ -11,7 +11,8 @@ let auth = async function (req, res) {
     console.log(user);
 
     if (user && user != null) {
-        const expiresIn = 86400; // expires in 24 hours
+        //const expiresIn = 86400; // expires in 24 hours
+        const expiresIn = 7200; // expires in 2 hours
 
         //Generate Token.
         var token = jwt.sign({ email: user.email, password : password }, process.env.SECRET_KEY, {

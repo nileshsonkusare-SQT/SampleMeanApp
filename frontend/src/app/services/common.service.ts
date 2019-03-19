@@ -11,6 +11,8 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class CommonService {
 
+  public DEFAULT_PAGE_SIZE: number = 10;
+  
   constructor(private toastr: ToastrService) { }
 
   isNullOrEmpty(item) {

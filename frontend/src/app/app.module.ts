@@ -21,6 +21,7 @@ import { LoginComponent } from './pages/account/login/login.component';
 import { SignupComponent } from './pages/account/signup/signup.component';
 import { LoginLayoutComponent } from './pages/common/layouts/login-layout/login-layout.component';
 import { AppLayoutComponent } from './pages/common/layouts/app-layout/app-layout.component';
+import { PaginationComponent } from './pages/common/pagination/pagination.component';
 
 //@Services
 import { AppRoutingModule } from './app-routing.module';
@@ -33,6 +34,7 @@ import { AuthService } from './services/auth/auth.service';
 import { StorageService } from './services/storage.service';
 import { AuthGuard } from './services/auth/auth-guard.service';
 import { AccountService } from './services/account.service';
+import { PagerService } from './pages/common/pagination/pager.service';
 
 
 export function tokenGetter() {
@@ -52,12 +54,13 @@ export function tokenGetter() {
     LoginComponent,
     SignupComponent,
     LoginLayoutComponent,
-    AppLayoutComponent
+    AppLayoutComponent,
+    PaginationComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
-    AppRoutingModule,
+    AppRoutingModule,    
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
@@ -87,7 +90,8 @@ export function tokenGetter() {
     AccountService,
     StorageService,
     StudentService,
-    HttpService   
+    HttpService,
+    PagerService 
   ],
   bootstrap: [AppComponent]
 })

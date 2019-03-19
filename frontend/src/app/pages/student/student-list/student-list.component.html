@@ -17,12 +17,33 @@
         <div class="col-md-12">
             <div class="box">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Students</h3>
-                    <button type="button" class="pull-right btn btn-sm btn-info" (click)="addStudent()"><i class="fa fa-plus m-r-xs"></i> Add Student</button>
+                    <div class="col-md-6">
+                        <h3 class="box-title">Students</h3>
+
+                        <!-- <button type="button" class="btn btn-sm btn-primary m-l-md" (click)="dummyStudents()"><i
+                            class="fa fa-plus m-r-xs"></i> Insert Dummy Students</button> -->
+                    </div>
+
+                    <div class="col-md-6 text-right">
+                        <div class="col-md-9 p-n">
+                            <div class="input-group input-group-sm">
+                                <input type="text" id="filtertext" name="filtertext" [(ngModel)]="filtertext" 
+                                    class="form-control" placeholder="Search Name / Address / Mobile No" (keydown.enter)="onKeydown($event)"/>
+                                <span class="input-group-btn">
+                                    <button type="button" (click)="search()" class="btn btn-info btn-flat"><i class="fa fa-search"></i></button>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-md-3 p-n text-right">
+                            <button type="button" class="btn btn-sm btn-info" (click)="addStudent()"><i
+                                class="fa fa-plus m-r-xs"></i> Add Student</button>
+                        </div>
+                    </div>
+
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
-                    <table class="table table-bordered">
+                    <table class="table table-bordered table-hover">
                         <tbody>
                             <tr>
                                 <th>First Name</th>
@@ -39,8 +60,10 @@
                                 <td>{{ student.mobileno }}</td>
                                 <td>{{ parseDate(student.birthdate) }}</td>
                                 <td>
-                                    <button type="button" class="btn btn-success btn-xs m-r-sm" (click) = "editStudent(student);">Edit</button>
-                                    <button type="button" class="btn btn-danger btn-xs" (click) = "deleteStudent(student);">Delete</button>
+                                    <button type="button" class="btn btn-success btn-xs m-r-sm"
+                                        (click)="editStudent(student);">Edit</button>
+                                    <button type="button" class="btn btn-danger btn-xs"
+                                        (click)="deleteStudent(student);">Delete</button>
                                 </td>
                             </tr>
                         </tbody>
@@ -48,6 +71,12 @@
                 </div>
                 <!-- /.box-body -->
                 <div class="box-footer clearfix">
+                    <div class="row">
+                        <custom-pagination [id]="pagination_1" [pager]="pager" (goFirst)="goToFirstPage()"
+                            (goPrev)="gotToPrevPage()" (goNext)="goToNextPage()" (goLast)="goToLastPage()"
+                            (goPage)="goToPage($event)" (changePageSize)="changePageSize($event)">
+                        </custom-pagination>
+                    </div>
                 </div>
             </div>
             <!-- /.box -->

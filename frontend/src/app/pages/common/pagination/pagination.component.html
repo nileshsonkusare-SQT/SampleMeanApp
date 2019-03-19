@@ -1,0 +1,41 @@
+<div class="col-md-12">
+    <div class="col-md-3">
+        <div class="paginate_length">
+            <label>Show
+                <select name="select_paginate_length" (change)="onPageSizeChange($event.target.value)"
+                    [ngModel]="pager.pageSize" aria-controls="select_paginate_length" class="form-control input-sm">
+                    <option value="10">10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                </select>
+                rows
+            </label>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="paginate_info text-center" role="status" aria-live="polite">
+            Showing {{pager.startIndex + 1}} to {{pager.endIndex + 1}} of {{pager.totalItems}} rows
+        </div>
+    </div>
+    <div class="col-md-6 paginate">
+        <!-- pager -->
+        <ul *ngIf="pager.pages && pager.pages.length" class="pagination" id="{id}">
+            <li [ngClass]="{disabled:pager.currentPage === 1}">
+                <a (click)="onFirst()">First</a>
+            </li>
+            <li [ngClass]="{disabled:pager.currentPage === 1}">
+                <a (click)="onPrev()">Previous</a>
+            </li>
+            <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+                <a (click)="onPage(page)">{{page}}</a>
+            </li>
+            <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                <a (click)="onNext()">Next</a>
+            </li>
+            <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                <a (click)="onLast()">Last</a>
+            </li>
+        </ul>
+    </div>
+</div>

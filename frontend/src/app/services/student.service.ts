@@ -20,8 +20,8 @@ export class StudentService {
     this.apiUrl = this._api.ServerWithApiUrl;
   }
 
-  getStudents() {
-    return this._httpService.get(`${this.apiUrl}student/GetAll`, { headers: this._api.getHeaders() })
+  getStudents(filtertext:string, page:number , pagesize: number) {
+    return this._httpService.get(`${this.apiUrl}student/GetAll?filtertext=${filtertext}&page=${page}&pagesize=${pagesize}`, { headers: this._api.getHeaders() })
       .pipe(
         map((response: Response) => {          
           return this._httpService.extractData(response);
@@ -70,6 +70,17 @@ export class StudentService {
         map((response: any) => {
           return this._httpService.extractData(response);
         }), catchError((errorRes: any) => {
+          return this._httpService.handleError(errorRes);
+        })
+      );
+  }
+
+  dummyStudents() {
+    return this._httpService.post(`${this.apiUrl}student/DummyStudents`, null, { headers: this._api.getHeaders() })
+      .pipe(
+        map((response: any) => {
+          return this._httpService.extractData(response);
+        }), catchError((errorRes: any) => {          
           return this._httpService.handleError(errorRes);
         })
       );

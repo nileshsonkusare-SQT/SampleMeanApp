@@ -3,7 +3,12 @@ let StudentService = require('../services/student.service');
 let StudentController = {
     getAllStudents: async function (req, res, next) {
         try {
-            let students = await StudentService.getAllStudents();
+
+            let filtertext = req.query.filtertext;
+            let page = +req.query.page || 1;
+            let pagesize = +req.query.pagesize || 10;
+
+            let students = await StudentService.getAllStudents(filtertext, page, pagesize);
             return res.status(200).json({ status: 200, data: students, success: true });
         }
         catch (e) {
@@ -35,7 +40,7 @@ let StudentController = {
                 address: req.body.address,
                 birthdate: req.body.birthdate
             };
-            
+
             let createdStudent = await StudentService.createStudent(studentModal);
 
             return res.status(201).json({ status: 201, data: createdStudent, success: true });
@@ -80,12 +85,33 @@ let StudentController = {
                 return res.status(200).json({ status: 200, success: true });
             } else {
                 return res.status(200).json({ status: 200, message: "Student detail not found", success: false });
-            }            
+            }
         }
         catch (e) {
             return res.status(400).json({ status: 400, data: deletedStudent, message: e.message, success: false });
         }
-    }
+    },
+    dummyStudents: async function (req, res, next) {
+        try {
+
+            for (var i = 1; i <= 500; i++) {
+                let studentModal = {
+                    firstname: `Test_FirstName_${i}`,
+                    lastname: `Test_LastName_${i}`,
+                    mobileno: `1234567890`,
+                    address: `Test_Address_${i}`,
+                    birthdate: new Date(1990, 0, 1)
+                };
+    
+                await StudentService.createStudent(studentModal);
+            }
+
+            return res.status(201).json({ status: 201, data: "Dummy Data Inserted Successfully.", success: true });
+        }
+        catch (e) {
+            return res.status(400).json({ status: 400, message: e.message, success: false });
+        }
+    },
 }
 
 module.exports = StudentController;

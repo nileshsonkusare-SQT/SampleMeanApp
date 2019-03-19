@@ -7,10 +7,10 @@ import swal from 'sweetalert2'
 //@Services
 import { CommonService } from 'src/app/services/common.service';
 import { StudentService } from 'src/app/services/student.service';
+import { PagerService } from '../../common/pagination/pager.service';
 
 //@Models
 import { StudentVM } from 'src/app/models/StudentVM';
-
 
 @Component({
   selector: 'app-student-list',
@@ -21,25 +21,39 @@ export class StudentListComponent implements OnInit {
 
   students: StudentVM[] = [];
 
-  constructor(private router: Router,    
-    private commonService: CommonService,
-    private studentService: StudentService) { }
+  filtertext: string = "";
+  pager: any = {}; //pager object
+  totalCount: number;
+  page: number = 1;
+  pageSize: number;
 
-  ngOnInit() {    
+  constructor(private router: Router,
+    private commonService: CommonService,
+    private pagerService: PagerService,
+    private studentService: StudentService) {
+    this.pageSize = this.commonService.DEFAULT_PAGE_SIZE;    
+  }
+
+  ngOnInit() {
     this.loadStudents();
   }
 
   loadStudents() {
     let self = this;
-    
+
     self.commonService.showLoader();
-    self.studentService.getStudents().subscribe(data => {
+    self.studentService.getStudents(self.filtertext, self.page, self.pageSize).subscribe(data => {
       self.commonService.hideLoader();
 
       if (!self.commonService.isNullOrEmpty(data)) {
         let response: any = data;
         if (response.success) {
-          self.students = response.data;
+          let result: any = response.data;
+          console.log(result);
+
+          self.students = result.docs;
+          self.totalCount = result.total;
+          self.setPage(self.page);
         } else {
           if (typeof response.message === 'object') {
             self.commonService.showToaster(JSON.stringify(response.message), "error");
@@ -95,7 +109,7 @@ export class StudentListComponent implements OnInit {
         }, error => {
           self.commonService.hideLoader();
           self.commonService.showToaster(error.message, "error");
-        });     
+        });
       }
     })
   }
@@ -106,6 +120,91 @@ export class StudentListComponent implements OnInit {
 
   parseDate(date: string) {
     return this.commonService.parseDate(date);
+  }
+
+  search(){
+    this.page = 1;
+    this.loadStudents();
+  }
+
+  pageChange(pageNo) {
+    this.page = pageNo;
+    console.log("Page No : " + pageNo);
+  }
+
+  goToPage(n: number): void {
+    console.log("Page No : " + n);
+    this.page = n;
+    this.loadStudents();
+  }
+
+  changePageSize(n: number): void {
+    console.log("Page Size : " + n);
+    this.page = 1;
+    this.pageSize = n;
+    this.loadStudents();
+  }
+
+  goToFirstPage(): void {
+    this.page = 1;
+    this.loadStudents();
+  }
+
+  goToNextPage(): void {
+    this.page++;
+    this.loadStudents();
+  }
+
+  gotToPrevPage(): void {
+    this.page--;
+    this.loadStudents();
+  }
+
+  goToLastPage(): void {
+    this.page = this.pager.totalPages;
+    this.loadStudents();
+  }
+
+  setPage(pageNo: number) {
+    let self = this;
+    let totalPages = Math.ceil(self.totalCount / self.pageSize);
+    if (pageNo < 1 || pageNo > totalPages) {
+      return;
+    }
+
+    // get pager object from service
+    self.pager = this.pagerService.getPager(self.totalCount, pageNo, self.pageSize);
+    console.log(self.pager);
+  }
+
+  onKeydown(event) {
+    console.log(event);
+    this.search();
+  }
+
+  dummyStudents(){
+    let self = this;
+
+    self.commonService.showLoader();
+    self.studentService.dummyStudents().subscribe(data => {
+      self.commonService.hideLoader();
+
+      if (!self.commonService.isNullOrEmpty(data)) {
+        let response: any = data;
+        if (response.success) {
+          self.commonService.showToaster("Dummy Data Inserted Successfully.", "success");
+        } else {
+          if (typeof response.message === 'object') {
+            self.commonService.showToaster(JSON.stringify(response.message), "error");
+          } else {
+            self.commonService.showToaster(response.message, "error");
+          }
+        }
+      }
+    }, error => {
+      self.commonService.hideLoader();
+      self.commonService.showToaster(error.message, "error");
+    });
   }
 
 }

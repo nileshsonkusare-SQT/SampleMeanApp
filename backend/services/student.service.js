@@ -1,10 +1,37 @@
 let Student = require('../models/student');
 
 let StudentService = {
-    getAllStudents: async function () {
+    getAllStudents: async function (filtertext, page, pagesize) {
         try {
-            let students = await Student.find({});
+            var query = {};
+
+            if (filtertext) {
+                let pattern = new RegExp('.*' + filtertext + '.*', "i");
+                console.log(pattern);
+                query["$or"] = [
+                    { firstname: { $regex : pattern } },
+                    { lastname: { $regex : pattern } },
+                    { mobileno: { $regex : pattern } },
+                    { address: { $regex : pattern } },
+                ];
+            } 
+
+            console.log(query);
+
+            //Using built-in paginate function.
+            let students = await Student.paginate(query, { page: page, limit: pagesize });
             return students;
+
+            /**
+               * Response looks like:
+               * {
+               *   docs: [...] // array of Students
+               *   total: 50   // the total number of Students
+               *   limit: 10   // the number of Students returned per page
+               *   page: 2     // the current page of Students returned
+               *   pages: 5    // the total number of pages
+               * }
+              */
         }
         catch (e) {
             throw Error('Error while get all students');
@@ -19,7 +46,7 @@ let StudentService = {
         }
     },
     createStudent: async function (studentModal) {
-        try {            
+        try {
             let student = new Student(studentModal);
             return await student.save();
         } catch (e) {
@@ -55,7 +82,7 @@ let StudentService = {
     },
     deleteStudent: async function (id) {
         try {
-            let deletedStudent = await Student.findOneAndDelete({ _id : id });
+            let deletedStudent = await Student.findOneAndDelete({ _id: id });
             return deletedStudent;
         } catch (e) {
             throw Error('Error while deleting student');
