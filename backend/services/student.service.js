@@ -85,6 +85,7 @@ let StudentService = {
             oldStudent.mobileno = student.mobileno;
             oldStudent.address = student.address;
             oldStudent.birthdate = student.birthdate;
+            oldStudent.updatedon = student.updatedon;
 
             console.log(oldStudent);
 
@@ -106,6 +107,13 @@ let StudentService = {
             throw Error('Error while deleting student');
         }
     },
+    getStudentCount: async function(){
+        try {
+             return await Student.estimatedDocumentCount();
+        } catch (e) {
+            throw Error('Error while fetching total student count.');
+        }
+    }
 }
 
 module.exports = StudentService;

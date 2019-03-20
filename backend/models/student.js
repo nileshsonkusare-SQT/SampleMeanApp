@@ -5,20 +5,32 @@ const Schema = mongoose.Schema;
 // Define collection and schema for Student
 let Student = new Schema({
     firstname: {
-      type: String
+      type: String,
+      required: true
     },
     lastname: {
-      type: String
+      type: String,
+      required: true
     },
     mobileno: {
-      type: String
+      type: String,
+      required: true
     },
     address: {
       type: String
     },
     birthdate: {
-      type: Date
-    }
+      type: Date,
+      required: true
+    },
+    createdon: {
+      type: Date,
+      required: true
+    },
+    updatedon: {
+      type: Date,
+      required: false      
+    },
   },{
       collection: 'student',
       versionKey: false     

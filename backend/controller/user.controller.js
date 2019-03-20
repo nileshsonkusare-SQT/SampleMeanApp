@@ -1,4 +1,5 @@
 let UserService = require('../services/user.service');
+const Common = require('../config/common');
 
 let UserController = {
     getAllUsers: async function (req, res, next) {
@@ -31,7 +32,7 @@ let UserController = {
             let userModal = {
                 name: req.body.name,
                 email: req.body.email,
-                password: req.body.password
+                password: Common.encrypt(req.body.password)
             };
 
             let createdUser = await UserService.createUser(userModal);
@@ -54,8 +55,7 @@ let UserController = {
             let userModal = {
                 _id: id,
                 name: req.body.name,
-                email: req.body.email,
-                password: req.body.password
+                email: req.body.email
             };
 
             let updatedUser = await UserService.updateUser(id, userModal);

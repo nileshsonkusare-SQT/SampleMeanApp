@@ -22,8 +22,8 @@ export class StudentListComponent implements OnInit {
   students: StudentVM[] = [];
 
   filtertext: string = "";
-  sortColumn: string = "firstname";
-  sortDirection: string = "asc";
+  sortColumn: string;
+  sortDirection: string;
   pager: any = {}; //pager object
   totalCount: number;
   page: number = 1;
@@ -37,8 +37,8 @@ export class StudentListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.sortColumn = "firstname";
-    this.sortDirection = "asc";
+    this.sortColumn = "createdon";
+    this.sortDirection = "desc";
     this.loadStudents();
   }
 
@@ -200,6 +200,7 @@ export class StudentListComponent implements OnInit {
         let response: any = data;
         if (response.success) {
           self.commonService.showToaster("Dummy Data Inserted Successfully.", "success");
+          self.loadStudents();
         } else {
           if (typeof response.message === 'object') {
             self.commonService.showToaster(JSON.stringify(response.message), "error");

@@ -26,6 +26,7 @@ export class SignupComponent implements OnInit, OnDestroy {
 
   signupForm: FormGroup;
   submitted = false;
+  registerButtonText = "Sign Up";
   retypePassword: string;
 
   userModal = new UserVM();
@@ -73,11 +74,9 @@ export class SignupComponent implements OnInit, OnDestroy {
       return;
     }
 
-    console.log(self.signupForm.value);
-
-    self._commonService.showLoader();
+    self.registerButtonText = "Processing... <i class='fa fa-spinner fa-spin'>";
     self._accountService.signup(self.signupForm.value).subscribe(data => {
-      self._commonService.hideLoader();
+      self.registerButtonText = "Sign Up";
 
       if (!self._commonService.isNullOrEmpty(data)) {
         let response: any = data;
@@ -95,10 +94,9 @@ export class SignupComponent implements OnInit, OnDestroy {
         }
       }
     }, error => {
-      self._commonService.hideLoader();
+      self.registerButtonText = "Sign Up";
       self._commonService.showToaster(error.message, "error");
     });
-
   }
 
 }

@@ -1,5 +1,4 @@
 let User = require('../models/user');
-
 let UserService = {
     getAllUsers: async function () {
         try {
@@ -17,9 +16,37 @@ let UserService = {
                 { name: 1, email: 1, _id: 0 });
             
             return user;
+            
+            // let userModal = {};
+
+            // return new Promise((resolve, reject) => {
+
+            //     User.findOne({ email: email }, function (err, user) {
+            //         if (err) reject(err);
+
+            //         if (user) {
+
+            //             user.verifyPassword(password, function (err, isMatch) {
+            //                 if (err) reject(err);
+
+            //                 if (isMatch == true) {
+            //                     userModal = {
+            //                         name: user.name,
+            //                         email: user.email
+            //                     }
+            //                     resolve(userModal);
+            //                 } else {
+            //                     resolve(null);
+            //                 }
+            //             });
+            //         } else {
+            //             resolve(null);
+            //         }
+            //     })
+            // });
         }
         catch (e) {
-            throw Error('Error while get all users');
+            throw Error('Error while get user login');
         }
     },
     getUserById: async function (id) {
@@ -32,7 +59,7 @@ let UserService = {
     },
     getUserByEmail: async function (email) {
         try {
-            let user = await User.findOne({ email: email});
+            let user = await User.findOne({ email: email });
             return user;
         } catch (e) {
             throw Error('Error while get user by email');
@@ -57,7 +84,6 @@ let UserService = {
             //Edit the User Object
             oldUser.name = user.name;
             oldUser.email = user.email;
-            oldUser.password = user.password;
 
             console.log(oldUser);
 
@@ -78,7 +104,7 @@ let UserService = {
         } catch (e) {
             throw Error('Error while deleting user');
         }
-    },
+    }
 }
 
 module.exports = UserService;

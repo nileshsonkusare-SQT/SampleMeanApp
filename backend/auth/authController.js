@@ -1,10 +1,10 @@
 var jwt = require('jsonwebtoken');
 var UserService = require('../services/user.service')
-
+const Common = require('../config/common');
 
 let auth = async function (req, res) {
     let email = req.body.email;
-    let password = req.body.password;
+    let password = Common.encrypt(req.body.password);
 
     let user = await UserService.getUserLogin(email, password);
 
@@ -15,8 +15,8 @@ let auth = async function (req, res) {
         const expiresIn = 7200; // expires in 2 hours
 
         //Generate Token.
-        var token = jwt.sign({ email: user.email, password : password }, process.env.SECRET_KEY, {
-            expiresIn: expiresIn 
+        var token = jwt.sign({ email: user.email, password: password }, process.env.SECRET_KEY, {
+            expiresIn: expiresIn
         });
 
         res.json({

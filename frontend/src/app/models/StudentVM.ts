@@ -5,4 +5,6 @@ export class StudentVM {
     mobileno: string;
     address: string;
     birthdate: Date;
+    createdon: Date;
+    updatedon?: Date;
 }

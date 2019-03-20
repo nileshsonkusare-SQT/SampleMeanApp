@@ -1,4 +1,5 @@
 let UserService = require('../services/user.service');
+const Common = require('../config/common');
 
 let AccountController = {
     registerUser: async function (req, res, next) {
@@ -12,7 +13,7 @@ let AccountController = {
                 let userModal = {
                     name: req.body.name,
                     email: req.body.email,
-                    password: req.body.password
+                    password: Common.encrypt(req.body.password)
                 };
 
                 let createdUser = await UserService.createUser(userModal);
