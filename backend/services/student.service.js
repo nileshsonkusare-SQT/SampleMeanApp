@@ -1,25 +1,43 @@
 let Student = require('../models/student');
 
 let StudentService = {
-    getAllStudents: async function (filtertext, page, pagesize) {
+    getAllStudents: async function (filtertext, page, pagesize, sortcolumn, sortby) {
         try {
-            var query = {};
+            var query = {};            
+            var sorDirection = 1;
+            var sort = {};
+
+            if (sortby == 'desc') {
+                sorDirection = -1;
+            } else {
+                sorDirection = 1;
+            }
+
+            sort[sortcolumn] = sorDirection;
 
             if (filtertext) {
                 let pattern = new RegExp('.*' + filtertext + '.*', "i");
                 console.log(pattern);
                 query["$or"] = [
-                    { firstname: { $regex : pattern } },
-                    { lastname: { $regex : pattern } },
-                    { mobileno: { $regex : pattern } },
-                    { address: { $regex : pattern } },
+                    { firstname: { $regex: pattern } },
+                    { lastname: { $regex: pattern } },
+                    { mobileno: { $regex: pattern } },
+                    { address: { $regex: pattern } },
                 ];
-            } 
+            }
 
             console.log(query);
 
+            var options = {
+                page: page, 
+                limit: pagesize, 
+                sort: sort 
+            }
+
+            console.log(options);
+
             //Using built-in paginate function.
-            let students = await Student.paginate(query, { page: page, limit: pagesize });
+            let students = await Student.paginate(query, options);
             return students;
 
             /**

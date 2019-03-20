@@ -20,8 +20,8 @@ export class StudentService {
     this.apiUrl = this._api.ServerWithApiUrl;
   }
 
-  getStudents(filtertext:string, page:number , pagesize: number) {
-    return this._httpService.get(`${this.apiUrl}student/GetAll?filtertext=${filtertext}&page=${page}&pagesize=${pagesize}`, { headers: this._api.getHeaders() })
+  getStudents(filtertext:string, page:number , pagesize: number, sort: string, sortby: string) {
+    return this._httpService.get(`${this.apiUrl}student/GetAll?filtertext=${filtertext}&page=${page}&pagesize=${pagesize}&sort=${sort}&sortby=${sortby}`, { headers: this._api.getHeaders() })
       .pipe(
         map((response: Response) => {          
           return this._httpService.extractData(response);

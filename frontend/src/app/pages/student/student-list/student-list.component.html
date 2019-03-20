@@ -17,40 +17,42 @@
         <div class="col-md-12">
             <div class="box">
                 <div class="box-header with-border">
-                    <div class="col-md-6">
+                    <div class="col-md-6 p-n">
                         <h3 class="box-title">Students</h3>
 
                         <!-- <button type="button" class="btn btn-sm btn-primary m-l-md" (click)="dummyStudents()"><i
                             class="fa fa-plus m-r-xs"></i> Insert Dummy Students</button> -->
                     </div>
 
-                    <div class="col-md-6 text-right">
+                    <div class="col-md-6 text-right p-n">
                         <div class="col-md-9 p-n">
                             <div class="input-group input-group-sm">
-                                <input type="text" id="filtertext" name="filtertext" [(ngModel)]="filtertext" 
-                                    class="form-control" placeholder="Search Name / Address / Mobile No" (keydown.enter)="onKeydown($event)"/>
+                                <input type="text" id="filtertext" name="filtertext" [(ngModel)]="filtertext"
+                                    class="form-control" placeholder="Search Name / Address / Mobile No"
+                                    (keydown.enter)="onKeydown($event)" />
                                 <span class="input-group-btn">
-                                    <button type="button" (click)="search()" class="btn btn-info btn-flat"><i class="fa fa-search"></i></button>
+                                    <button type="button" (click)="search()" class="btn btn-info btn-flat"><i
+                                            class="fa fa-search"></i></button>
                                 </span>
                             </div>
                         </div>
                         <div class="col-md-3 p-n text-right">
                             <button type="button" class="btn btn-sm btn-info" (click)="addStudent()"><i
-                                class="fa fa-plus m-r-xs"></i> Add Student</button>
+                                    class="fa fa-plus m-r-xs"></i> Add Student</button>
                         </div>
                     </div>
 
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
-                    <table class="table table-bordered table-hover">
+                    <table class="table table-bordered table-hover student-table" sortable-table (sorted)="onSorted($event)">
                         <tbody>
                             <tr>
-                                <th>First Name</th>
-                                <th>Last Name</th>
-                                <th>Address</th>
-                                <th>Mobile No</th>
-                                <th>Birthdate</th>
+                                <th sortable-column="firstname" sort-direction="desc">First Name</th>
+                                <th sortable-column="lastname">Last Name</th>
+                                <th sortable-column="address">Address</th>
+                                <th sortable-column="mobileno">Mobile No</th>
+                                <th sortable-column="birthdate">Birthdate</th>
                                 <th>Actions</th>
                             </tr>
                             <tr *ngFor="let student of students">

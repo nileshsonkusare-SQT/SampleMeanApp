@@ -19,6 +19,7 @@ export class LoginComponent implements OnInit, OnDestroy  {
 
   loginForm: FormGroup;
   submitted = false;
+  loginButtonText = "Sign In";
 
   userModal = new UserVM();
 
@@ -60,9 +61,9 @@ export class LoginComponent implements OnInit, OnDestroy  {
 
     console.log(self.loginForm.value);
 
-    self._commonService.showLoader();
+    self.loginButtonText = "Processing... <i class='fa fa-spinner fa-spin'>";
     self._auth.login(self.loginForm.value).subscribe(data => {
-      self._commonService.hideLoader();
+      self.loginButtonText = "Sign In";
 
       if (!self._commonService.isNullOrEmpty(data)) {
         let response: any = data;
@@ -72,7 +73,8 @@ export class LoginComponent implements OnInit, OnDestroy  {
           self._auth.setSession(response);
           
           //Go to Dashboard page.
-          this.router.navigate(['/dashboard']);
+          window.location.href = "/dashboard"
+          //this.router.navigate(['/dashboard']);
         } else {
           if (typeof response.message === 'object') {
             self._commonService.showToaster(JSON.stringify(response.message), "error");
@@ -82,10 +84,11 @@ export class LoginComponent implements OnInit, OnDestroy  {
         }
       }
     }, error => {
-      self._commonService.hideLoader();
+      self.loginButtonText = "Sign In";
       self._commonService.showToaster(error.message, "error");
     });
-
   }
+
+  
 
 }

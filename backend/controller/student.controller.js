@@ -7,8 +7,10 @@ let StudentController = {
             let filtertext = req.query.filtertext;
             let page = +req.query.page || 1;
             let pagesize = +req.query.pagesize || 10;
+            let sort = req.query.sort;
+            let sortby = req.query.sortby;
 
-            let students = await StudentService.getAllStudents(filtertext, page, pagesize);
+            let students = await StudentService.getAllStudents(filtertext, page, pagesize, sort, sortby);
             return res.status(200).json({ status: 200, data: students, success: true });
         }
         catch (e) {

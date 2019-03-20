@@ -22,6 +22,10 @@ import { SignupComponent } from './pages/account/signup/signup.component';
 import { LoginLayoutComponent } from './pages/common/layouts/login-layout/login-layout.component';
 import { AppLayoutComponent } from './pages/common/layouts/app-layout/app-layout.component';
 import { PaginationComponent } from './pages/common/pagination/pagination.component';
+import { SortableColumnComponent } from './pages/common/sortable-table/sortable-column/sortable-column.component';
+
+//@Directive
+import { SortableTableDirective } from './pages/common/sortable-table/sortable-table.directive';
 
 //@Services
 import { AppRoutingModule } from './app-routing.module';
@@ -35,7 +39,7 @@ import { StorageService } from './services/storage.service';
 import { AuthGuard } from './services/auth/auth-guard.service';
 import { AccountService } from './services/account.service';
 import { PagerService } from './pages/common/pagination/pager.service';
-
+import { SortService } from './pages/common/sortable-table/sort.service';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -55,7 +59,9 @@ export function tokenGetter() {
     SignupComponent,
     LoginLayoutComponent,
     AppLayoutComponent,
-    PaginationComponent
+    PaginationComponent,
+    SortableColumnComponent,
+    SortableTableDirective
   ],
   imports: [
     BrowserModule,
@@ -91,7 +97,8 @@ export function tokenGetter() {
     StorageService,
     StudentService,
     HttpService,
-    PagerService 
+    PagerService,
+    SortService
   ],
   bootstrap: [AppComponent]
 })

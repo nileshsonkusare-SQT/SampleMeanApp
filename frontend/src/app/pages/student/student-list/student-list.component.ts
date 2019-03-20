@@ -22,6 +22,8 @@ export class StudentListComponent implements OnInit {
   students: StudentVM[] = [];
 
   filtertext: string = "";
+  sortColumn: string = "firstname";
+  sortDirection: string = "asc";
   pager: any = {}; //pager object
   totalCount: number;
   page: number = 1;
@@ -31,10 +33,12 @@ export class StudentListComponent implements OnInit {
     private commonService: CommonService,
     private pagerService: PagerService,
     private studentService: StudentService) {
-    this.pageSize = this.commonService.DEFAULT_PAGE_SIZE;    
+    this.pageSize = this.commonService.DEFAULT_PAGE_SIZE;
   }
 
   ngOnInit() {
+    this.sortColumn = "firstname";
+    this.sortDirection = "asc";
     this.loadStudents();
   }
 
@@ -42,7 +46,7 @@ export class StudentListComponent implements OnInit {
     let self = this;
 
     self.commonService.showLoader();
-    self.studentService.getStudents(self.filtertext, self.page, self.pageSize).subscribe(data => {
+    self.studentService.getStudents(self.filtertext, self.page, self.pageSize, self.sortColumn, self.sortDirection).subscribe(data => {
       self.commonService.hideLoader();
 
       if (!self.commonService.isNullOrEmpty(data)) {
@@ -122,11 +126,18 @@ export class StudentListComponent implements OnInit {
     return this.commonService.parseDate(date);
   }
 
-  search(){
+  /** Searching  */
+  search() {
     this.page = 1;
     this.loadStudents();
   }
 
+  onKeydown(event) {
+    console.log(event);
+    this.search();
+  }
+
+  /** Paging */
   pageChange(pageNo) {
     this.page = pageNo;
     console.log("Page No : " + pageNo);
@@ -177,12 +188,8 @@ export class StudentListComponent implements OnInit {
     console.log(self.pager);
   }
 
-  onKeydown(event) {
-    console.log(event);
-    this.search();
-  }
-
-  dummyStudents(){
+  /** Dummy Students */
+  dummyStudents() {
     let self = this;
 
     self.commonService.showLoader();
@@ -205,6 +212,18 @@ export class StudentListComponent implements OnInit {
       self.commonService.hideLoader();
       self.commonService.showToaster(error.message, "error");
     });
+  }
+
+  /** Sorting */
+  onSorted($event) {
+    console.log($event);
+    var sortedEvent = $event;
+    if (sortedEvent) {
+      this.sortColumn = sortedEvent.sortColumn;
+      this.sortDirection = sortedEvent.sortDirection;
+      this.page = 1;
+      this.loadStudents();
+    }
   }
 
 }
