@@ -73,7 +73,7 @@ export class LoginComponent implements OnInit, OnDestroy  {
           self._auth.setSession(response);
           
           //Go to Dashboard page.
-          window.location.href = "/dashboard"
+          window.location.href = "/dashboard";
           //this.router.navigate(['/dashboard']);
         } else {
           if (typeof response.message === 'object') {
